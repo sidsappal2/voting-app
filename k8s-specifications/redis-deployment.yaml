@@ -27,4 +27,4 @@ spec:
       - name: redis-data
         emptyDir: {} 
       imagePullSecrets:
-      - name:acr-secret
+      - name: acr-secret
