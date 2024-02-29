@@ -19,7 +19,7 @@ sed -i "s|image:.*|image: sidazurecicd.azurecr.io/$2:$3|g" k8s-specifications/$1
 git add .
 
 # Commit the changes
-git commit -m "Update Kubernetes manifest"
+git commit -m "Update Kubernetes manifest $2:$3"
 
 # Push the changes back to the repository
 git push
