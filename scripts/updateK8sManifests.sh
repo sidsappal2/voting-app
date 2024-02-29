@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 # Set the repository URL
 REPO_URL="https://hbjg66nhsex6nketgastp4kiz5xl7udaxalhjlqllednybzbmgsa@dev.azure.com/sidsappal/voting-app/_git/voting-app"
 
