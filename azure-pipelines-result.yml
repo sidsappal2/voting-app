@@ -3,52 +3,60 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-  paths: 
-    include:
-      - result/*
+ paths:
+   include:
+     - result/*
 
 resources:
 - repo: self
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '6ba68338-f6d2-46e7-9b2d-7d18f9ca04c8'
+  dockerRegistryServiceConnection: '7277b2c1-90bb-4a47-a5d2-68c52414ff2c'
   imageRepository: 'resultapp'
   containerRegistry: 'sidazurecicd.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/result/Dockerfile'
   tag: '$(Build.BuildId)'
 
 pool:
-  name: 'azureagent'
+ name: 'azureagent'
 
 stages:
 - stage: Build
-  displayName: Build
+  displayName: Build the image
   jobs:
   - job: Build
     displayName: Build
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build an image
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
-
-- stage: Push
-  displayName: Push
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(imageRepository)'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
+- stage: Push 
+  displayName: Push the image
   jobs:
   - job: Push
     displayName: Push
     steps:
     - task: Docker@2
-      displayName: Push an image to container registry
+      displayName: Push an image
       inputs:
         containerRegistry: '$(dockerRegistryServiceConnection)'
         repository: '$(imageRepository)'
-        command: 'push'
+        command: 'Push'
         tags: '$(tag)'
-
+        
+- stage: Update
+  displayName: Update 
+  jobs:
+  - job: Update
+    displayName: Update
+    steps:
+    - task: ShellScript@2
+      inputs:
+        scriptPath: 'scripts/updateK8sManifests.sh'
+        args: 'result $(imageRepository) $(tag)'
