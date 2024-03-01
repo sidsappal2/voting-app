@@ -15,7 +15,7 @@ spec:
         app: worker
     spec:
       containers:
-      - image: sidazurecicd.azurecr.io/workerapp:29
+      - image: sidazurecicd.azurecr.io/workerapp:30
         name: worker
       imagePullSecrets:
       - name: acr-secret
