@@ -15,7 +15,7 @@ spec:
         app: result
     spec:
       containers:
-      - image: sidazurecicd.azurecr.io/resultapp:32
+      - image: dockersamples/examplevotingapp_result
         name: result
         ports:
         - containerPort: 80
