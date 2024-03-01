@@ -7,10 +7,10 @@ REPO_URL="https://6ajd6oeawsl43dzktsqidu2asrnssp7n2oivo3a475ycwolp4rpq@dev.azure
 
 
 # Clone the git repository into the /tmp directory
-git clone "$REPO_URL" /temp/temp_repo
+git clone "$REPO_URL" /_temp/temp_repo
 
 # Navigate into the cloned repository directory
-cd  /temp/temp_repo
+cd  /_temp/temp_repo
 
 # Make changes to the Kubernetes manifest file(s)
 # For example, let's say you want to change the image tag in a deployment.yaml file
@@ -24,6 +24,9 @@ git commit -m "Update Kubernetes manifest"
 
 # Push the changes back to the repository
 git push
+
+# Cleanup: remove the temporary directory
+rm -rf   /_temp/temp_repo
 
 
 
